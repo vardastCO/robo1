@@ -22,7 +22,7 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
         executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
         args: [
             '--no-sandbox',
-            `--proxy-server=${proxyServer}`,
+            // `--proxy-server=${proxyServer}`,
         ],
     });
 
