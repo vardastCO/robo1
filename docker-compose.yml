@@ -5,3 +5,5 @@ services:
       context: .  # The path to the directory containing your Node.js app
     ports:
       - "3002:3002"       # Map your Node.js app's port to the host
+    volumes:
+      - "./data:/app/data"
