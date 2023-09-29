@@ -16,17 +16,20 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
 (async () => {
     const proxyServer =
         'ss://YWVzLTI1Ni1nY206d0DVaGt6WGpjRA==@38.54.13.15:31214#main';
-
-    const browser = await puppeteer.launch({
-        headless: "new",
-        ignoreDefaultArgs: ['--disable-extensions'],
-        executablePath: '/usr/bin/chromium-browser',
-        args: [
-            '--no-sandbox',
-            // `--proxy-server=${proxyServer}`,
-            '--disable-setuid-sandbox',
-        ],
-    });
+    try {
+        const browser = await puppeteer.launch({
+            headless: "new",
+            ignoreDefaultArgs: ['--disable-extensions'],
+            executablePath: '/usr/bin/chromium-browser',
+            args: [
+                '--no-sandbox',
+                `--proxy-server=${proxyServer}`,
+                '--disable-setuid-sandbox',
+            ],
+        });
+    } catch (error) {
+        console.error('Error while launching the browser:', error);
+    }
 
     const processedHrefs = new Set();
     const unprocessedHrefs = new Set();
