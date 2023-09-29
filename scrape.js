@@ -18,7 +18,7 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
         'ss://YWVzLTI1Ni1nY206d0DVaGt6WGpjRA==@38.54.13.15:31214#main';
 
     const browser = await puppeteer.launch({
-        headless: false,
+        headless: true,
         executablePath: '/usr/bin/chromium-browser',
         args: [
             '--no-sandbox',
