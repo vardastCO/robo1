@@ -19,12 +19,11 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
         'ss://YWVzLTI1Ni1nY206d0DVaGt6WGpjRA==@38.54.13.15:31214#main';
     try {
         browser = await puppeteer.launch({
-            headless: true, // Set to true for headless mode, false for non-headless
-            ignoreDefaultArgs: ['--disable-extensions'],
+            headless: "new", // Set to true for headless mode, false for non-headless
             executablePath: '/usr/bin/chromium-browser',
             args: [
                 '--no-sandbox',
-                `--proxy-server=${proxyServer}`,
+                // `--proxy-server=${proxyServer}`,
                 '--disable-setuid-sandbox',
             ],
         });
@@ -37,14 +36,10 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
 
     async function processPage(pageUrl) {
         console.log(pageUrl);
-        try {
-            const page = await browser.newPage();
-            await page.goto(pageUrl, { timeout: 30000 }); // Increased timeout
-            // Additional code for handling the page
-        } catch (error) {
-            console.error('An error occurred during navigation:', error);
-        }
-            const priceElement = await page.$x(
+        const page = await browser.newPage();
+        await page.goto(pageUrl, { timeout: 3000 });
+
+        const priceElement = await page.$x(
             '/html/body/section[2]/div/div/div[3]/div/ul/li[2]/p/span'
         );
         if (priceElement.length > 0) {
