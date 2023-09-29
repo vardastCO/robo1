@@ -19,7 +19,7 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
 
     const browser = await puppeteer.launch({
         headless: true,
-        executablePath: 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
+        executablePath: '/usr/bin/chromium-browser',
         args: [`--proxy-server=${proxyServer}`],
     });
 

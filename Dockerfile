@@ -1,20 +1,22 @@
-# Use an official Node.js runtime as a parent image
+# Use the Node.js 18-alpine base image
 FROM node:18-alpine
 
-# Set the working directory to /app
+# Set a working directory for your application
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
+# Install any additional dependencies you need (if necessary)
+# For example, to install Chromium dependencies for Puppeteer
+RUN apk add --no-cache chromium
 
-# Install app dependencies
+# Copy your Node.js application code to the container
+COPY package.json package-lock.json ./
 RUN npm install
 
-# Bundle app source
+# Copy the rest of your application code to the container
 COPY . .
 
-# Expose the port your app runs on
+# Expose any necessary ports (if needed)
 EXPOSE 3002
 
-# Command to run the Node.js application
+# Start your Node.js application
 CMD ["node", "scrape.js"]
