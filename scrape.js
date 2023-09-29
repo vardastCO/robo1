@@ -19,8 +19,11 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
 
     const browser = await puppeteer.launch({
         headless: true,
-        executablePath: '/usr/bin/chromium-browser',
-        args: [`--proxy-server=${proxyServer}`],
+        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
+        args: [
+            '--no-sandbox', // Add the --no-sandbox flag
+            `--proxy-server=${proxyServer}`,
+        ],
     });
 
     const processedHrefs = new Set();

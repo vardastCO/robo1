@@ -4,19 +4,18 @@ FROM node:18-alpine
 # Set a working directory for your application
 WORKDIR /app
 
-# Install any additional dependencies you need (if necessary)
-# For example, to install Chromium dependencies for Puppeteer
-RUN apk add --no-cache chromium
+# Install Chromium dependencies (required for Puppeteer)
+RUN apk --no-cache add chromium
+ENV PUPPETEER_EXECUTABLE_PATH="/usr/bin/chromium-browser"
+
 
 # Copy your Node.js application code to the container
 COPY package.json package-lock.json ./
 RUN npm install
 
-# Copy the rest of your application code to the container
-COPY . .
-
 # Expose any necessary ports (if needed)
-EXPOSE 3002
+ EXPOSE 3002
 
 # Start your Node.js application
 CMD ["node", "scrape.js"]
+
