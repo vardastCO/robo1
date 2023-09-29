@@ -22,7 +22,12 @@ WORKDIR /app
 ENV PUPPETEER_EXECUTABLE_PATH="/usr/bin/chromium-browser"
 
 # Copy your Node.js application code to the container
-COPY package.json package-lock.json ./
+COPY package.json ./
+
+# Remove the existing package-lock.json (if it exists)
+RUN rm -f package-lock.json
+
+# Install the Node.js dependencies
 RUN npm install
 
 COPY . .
