@@ -10,15 +10,16 @@ const csvWriter = createCsvWriter({
 });
 
 const initialPage = 'https://www.hypersaz.com/';
-
 const startUrlPattern = 'https://www.hypersaz.com/product.php?';
 
 (async () => {
+    let browser; // Declare the browser variable
+
     const proxyServer =
         'ss://YWVzLTI1Ni1nY206d0DVaGt6WGpjRA==@38.54.13.15:31214#main';
     try {
-        const browser = await puppeteer.launch({
-            headless: "new",
+        browser = await puppeteer.launch({
+            headless: true, // Set to true for headless mode, false for non-headless
             ignoreDefaultArgs: ['--disable-extensions'],
             executablePath: '/usr/bin/chromium-browser',
             args: [
@@ -35,10 +36,9 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
     const unprocessedHrefs = new Set();
 
     async function processPage(pageUrl) {
-        console.log(pageUrl)
+        console.log(pageUrl);
         const page = await browser.newPage();
-        await page.goto(pageUrl,{timeout : 12000});
-
+        await page.goto(pageUrl, { timeout: 12000 });
 
         const priceElement = await page.$x(
             '/html/body/section[2]/div/div/div[3]/div/ul/li[2]/p/span'
@@ -49,7 +49,7 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
                 priceElement[0]
             );
             if (priceText.trim() !== '') {
-                const record = [{ url: pageUrl, price: priceText.trim()}];
+                const record = [{ url: pageUrl, price: priceText.trim() }];
                 await csvWriter.writeRecords(record);
                 console.log(`Saved: URL: ${pageUrl}, Price: ${priceText.trim()}`);
             }
@@ -61,20 +61,17 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
 
         for (const href of hrefs) {
             if (href && !processedHrefs.has(href)) {
-                if (!href.startsWith("https://")) {
+                if (!href.startsWith('https://')) {
                     var outputUrl = initialPage + href;
                 } else {
                     var outputUrl = href;
                 }
-                if(outputUrl.startsWith(startUrlPattern)){
+                if (outputUrl.startsWith(startUrlPattern)) {
                     unprocessedHrefs.add(outputUrl);
                 }
-
-
             }
         }
         await page.close();
-
     }
 
     try {
@@ -92,11 +89,13 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
 
             while (retryCount < maxRetries) {
                 try {
-                    await processPage(currentHref) // Increase the timeout to 30 seconds
+                    await processPage(currentHref); // Increase the timeout to 30 seconds
                     break; // If successful, break out of the loop
                 } catch (error) {
                     if (error.name === 'TimeoutError') {
-                        console.error(`Timeout occurred (Retry ${retryCount + 1}/${maxRetries}). Retrying...`);
+                        console.error(
+                            `Timeout occurred (Retry ${retryCount + 1}/${maxRetries}). Retrying...`
+                        );
                         retryCount++;
                     } else {
                         throw error; // Rethrow other errors
@@ -105,34 +104,21 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
             }
 
             if (retryCount >= maxRetries) {
-                console.error(`Max retries (${maxRetries}) reached. Unable to load the page: ${currentHref}`);
+                console.error(
+                    `Max retries (${maxRetries}) reached. Unable to load the page: ${currentHref}`
+                );
                 // Handle the situation when the page can't be loaded after maximum retries.
                 await pageForEvaluation.close();
                 continue; // Move on to the next URL
             }
-
-            // const hrefs = await pageForEvaluation.evaluate(() => {
-            //     const links = Array.from(document.querySelectorAll('a'));
-            //     return links.map((link) => link.getAttribute('href'));
-            // });
-            //
-            // for (const href of hrefs) {
-            //     if (href && !processedHrefs.has(href)) {
-            //         if (!href.startsWith("https://")) {
-            //             var outputUrl = initialPage + href;
-            //         } else {
-            //             var outputUrl = href;
-            //         }
-            //
-            //         unprocessedHrefs.add(outputUrl);
-            //     }
-            // }
 
             await pageForEvaluation.close();
         }
     } catch (error) {
         console.error('An error occurred:', error);
     } finally {
-        await browser.close();
+        if (browser) {
+            await browser.close();
+        }
     }
 })();
