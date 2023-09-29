@@ -12,16 +12,17 @@ RUN addgroup -S pptruser && adduser -S -G pptruser pptruser \
     && chown -R pptruser:pptruser /home/pptruser \
     && chown -R pptruser:pptruser /app
 
-# Run everything after as non-privileged user.
+# Switch to the non-privileged user
 USER pptruser
 
+# Set the working directory to the app directory
+WORKDIR /app
 
 ENV PUPPETEER_EXECUTABLE_PATH="/usr/bin/chromium-browser"
 
-
 # Copy your Node.js application code to the container
 COPY package.json package-lock.json ./
-RUN npm install
+RUN npm install --prefix /app
 
 COPY . .
 
@@ -29,4 +30,3 @@ EXPOSE 3002
 
 # Start your Node.js application
 CMD ["node", "scrape.js"]
-
