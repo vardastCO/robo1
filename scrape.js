@@ -37,9 +37,14 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
 
     async function processPage(pageUrl) {
         console.log(pageUrl);
-        const page = await browser.newPage();
-        await page.goto(pageUrl, { timeout: 12000 });
-
+        try {
+            const page = await browser.newPage(); // Create a new page instance
+            await page.goto(pageUrl, { timeout: 12000 }); // Navigate to the specified URL with a timeout of 12 seconds
+            // Additional code for handling the page, such as scraping data or interacting with elements, can be placed here
+        } catch (error) {
+            // Handle any errors that occur during page creation or navigation
+            console.error('An error occurred:', error);
+        }
         const priceElement = await page.$x(
             '/html/body/section[2]/div/div/div[3]/div/ul/li[2]/p/span'
         );
