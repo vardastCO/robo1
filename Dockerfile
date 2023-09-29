@@ -3,6 +3,9 @@ FROM node:18-alpine
 
 # Set a working directory for your application
 WORKDIR /app
+RUN apt-get update && \
+    apt-get install -y chromium-browser && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install Chromium dependencies (required for Puppeteer)
 RUN apk --no-cache add chromium
