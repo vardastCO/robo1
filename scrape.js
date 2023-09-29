@@ -18,11 +18,11 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
         'ss://YWVzLTI1Ni1nY206d0DVaGt6WGpjRA==@38.54.13.15:31214#main';
 
     const browser = await puppeteer.launch({
-        headless: true,
+        headless: false,
         executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
         args: [
             '--no-sandbox',
-            // `--proxy-server=${proxyServer}`,
+            `--proxy-server=${proxyServer}`,
         ],
     });
 
@@ -30,6 +30,7 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
     const unprocessedHrefs = new Set();
 
     async function processPage(pageUrl) {
+        console.log(pageUrl)
         const page = await browser.newPage();
         await page.goto(pageUrl,{timeout : 12000});
 
