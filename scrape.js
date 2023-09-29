@@ -19,10 +19,12 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
 
     const browser = await puppeteer.launch({
         headless: true,
+        ignoreDefaultArgs: ['--disable-extensions'],
         executablePath: '/usr/bin/chromium-browser',
         args: [
             '--no-sandbox',
             `--proxy-server=${proxyServer}`,
+            '--disable-setuid-sandbox',
         ],
     });
 
