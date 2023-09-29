@@ -1,17 +1,10 @@
 FROM alpine
 
 # Installs latest Chromium (100) package.
-RUN apk add --no-cache \
-      chromium \
-      nss \
-      freetype \
-      harfbuzz \
-      ca-certificates \
-      ttf-freefont \
-      nodejs \
-      npm \
+RUN apk add --no-cache chromium nss freetype harfbuzz ca-certificates ttf-freefont
+RUN apk add --no-cache nodejs npm
 
-
+RUN apk update
 
 # Add user so we don't need --no-sandbox.
 RUN addgroup -S pptruser && adduser -S -G pptruser pptruser \
