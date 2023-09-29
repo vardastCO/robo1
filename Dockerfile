@@ -13,8 +13,9 @@ ENV PUPPETEER_EXECUTABLE_PATH="/usr/bin/chromium-browser"
 COPY package.json package-lock.json ./
 RUN npm install
 
-# Expose any necessary ports (if needed)
- EXPOSE 3002
+COPY . .
+
+EXPOSE 3002
 
 # Start your Node.js application
 CMD ["node", "scrape.js"]
