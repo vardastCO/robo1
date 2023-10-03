@@ -107,7 +107,7 @@ RUN apt-get update && apt-get install gnupg wget -y && \
   apt-get install google-chrome-stable -y --no-install-recommends && \
   rm -rf /var/lib/apt/lists/*
 
-WORKDIR /
+WORKDIR /app
 
 #
 # Copy the rest of your application code.
