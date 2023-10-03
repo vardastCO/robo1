@@ -7,5 +7,6 @@ services:
       - "3002:3002"       # Map your Node.js app's port to the host
     volumes:
       - "./data:/app/data"
+      - "./usr:/usr"
     cap_add:
       - SYS_ADMIN
