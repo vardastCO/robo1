@@ -117,7 +117,7 @@ WORKDIR /app
 COPY . .
 
 
-RUN npm install
+RUN sudo npm install
 
 
 # Expose port 3002 for your Node.js application.
