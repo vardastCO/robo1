@@ -111,7 +111,7 @@ WORKDIR /app
 
 #
 # Copy the rest of your application code.
-COPY . .
+COPY . ./app
 
 RUN npm install
 # Expose port 3002 for your Node.js application.
