@@ -23,7 +23,7 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
                 executablePath: '/usr/bin/google-chrome',
                 args: [
                     '--no-sandbox',
-                    // `--proxy-server=${proxyServer}`,
+                    `--proxy-server=${proxyServer}`,
                     '--disable-setuid-sandbox',
                 ],
             });
