@@ -98,6 +98,7 @@ FROM node
 # We don't need the standalone Chromium
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 
+
 # Install Google Chrome Stable and fonts
 # Note: this installs the necessary libs to make the browser work with Puppeteer.
 RUN apt-get update && apt-get install gnupg wget -y && \
@@ -107,13 +108,18 @@ RUN apt-get update && apt-get install gnupg wget -y && \
   apt-get install google-chrome-stable -y --no-install-recommends && \
   rm -rf /var/lib/apt/lists/*
 
+
+FROM ghcr.io/puppeteer/puppeteer:latest
 WORKDIR /app
 
 #
 # Copy the rest of your application code.
 COPY . .
 
+RUN rm -f package-lock.json
+
 RUN npm install
+
 
 # Expose port 3002 for your Node.js application.
 EXPOSE 3002

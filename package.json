@@ -10,8 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "csv-writer": "^1.6.0",
-    "puppeteer-core": "2.1.1",
-    "locate-chrome" : "*"
+    "csv-writer": "*",
+    "puppeteer-core": "*",
+    "puppeteer": "*"
   }
 }

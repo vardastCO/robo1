@@ -1,6 +1,5 @@
-const puppeteer = require('puppeteer-core');
+const puppeteer = require('puppeteer');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
-const locateChrome = require('locate-chrome');
 
 const csvWriter = createCsvWriter({
     path: 'output.csv',
@@ -19,14 +18,18 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
             'ss://YWVzLTI1Ni1nY206d0DVaGt6WGpjRA==@38.54.13.15:31214#main';
         try {
             browser = await puppeteer.launch({
-                headless: "true", // Set to true for headless mode, false for non-headless
+                headless: "new", // Set to true for headless mode, false for non-headless
                 executablePath: '/usr/bin/google-chrome',
+                slowMo: 1000,
                 args: [
                     '--no-sandbox',
                     // `--proxy-server=${proxyServer}`,
                     '--disable-setuid-sandbox',
+                    '--disable-gpu', '--disable-setuid-sandbox', '--no-sandbox', '--no-zygote'
                 ],
             });
+
+
         } catch (error) {
             console.error('Error while launching the browser:', error);
         }
@@ -39,6 +42,7 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
         console.log('Processing Page:', pageUrl);
         const page = await browser.newPage();
         await page.goto(pageUrl, { timeout: 30000 });
+        await page.screenshot({path: '/tmp/example.png'});
 
         const priceElement = await page.$x(
             '/html/body/section[2]/div/div/div[3]/div/ul/li[2]/p/span'
