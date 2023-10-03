@@ -116,7 +116,6 @@ WORKDIR /app
 # Copy the rest of your application code.
 COPY . .
 
-RUN rm -f package-lock.json
 
 RUN npm install
 
