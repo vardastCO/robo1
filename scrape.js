@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer-core');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+const locateChrome = require('locate-chrome');
 
 const csvWriter = createCsvWriter({
     path: 'output.csv',
@@ -14,28 +15,28 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
 
 (async () => {
     let browser; // Declare the browser variable
+        const proxyServer =
+            'ss://YWVzLTI1Ni1nY206d0DVaGt6WGpjRA==@38.54.13.15:31214#main';
+        try {
+            browser = await puppeteer.launch({
+                headless: "new", // Set to true for headless mode, false for non-headless
+                executablePath: '/usr/bin/google-chrome',
+                args: [
+                    '--no-sandbox',
+                    `--proxy-server=${proxyServer}`,
+                    '--disable-setuid-sandbox',
+                ],
+            });
+        } catch (error) {
+            console.error('Error while launching the browser:', error);
+        }
 
-    const proxyServer =
-        'ss://YWVzLTI1Ni1nY206d0DVaGt6WGpjRA==@38.54.13.15:31214#main';
-    try {
-        browser = await puppeteer.launch({
-            headless: "new", // Set to true for headless mode, false for non-headless
-            executablePath: '/usr/bin/chromium-browser',
-            args: [
-                '--no-sandbox',
-                // `--proxy-server=${proxyServer}`,
-                '--disable-setuid-sandbox',
-            ],
-        });
-    } catch (error) {
-        console.error('Error while launching the browser:', error);
-    }
 
     const processedHrefs = new Set();
     const unprocessedHrefs = new Set();
 
     async function processPage(pageUrl) {
-        console.log(pageUrl);
+        console.log('Processing Page:', pageUrl);
         const page = await browser.newPage();
         await page.goto(pageUrl, { timeout: 3000 });
 
