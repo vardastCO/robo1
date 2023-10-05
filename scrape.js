@@ -54,7 +54,7 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
               // Handle accordingly
             }
           } catch (error) {
-            console.error(`Error checking ${urlToCheck}: ${error.message}`);
+            console.error(`Error checking ${pageUrl}: ${error.message}`);
             // Handle the error
           }
 
