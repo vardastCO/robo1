@@ -8,7 +8,7 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true \
    PUPPETEER_EXECUTABLE_PATH = /usr/bin/google-chrome-stable
 
 
-RUN chown -R node:node /usr/src/app
+RUN chmod -R u+rwx /usr/src/app
 
 # Switch to the 'node' user
 USER node
