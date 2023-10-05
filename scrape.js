@@ -22,7 +22,7 @@ async function createBrowser() {
                 process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath(),
             args: [
                 '--no-sandbox',
-                // `--proxy-server=${proxyServer}`,
+                `--proxy-server=${proxyServer}`,
                 '--disable-setuid-sandbox',
                 // '--enable-logging',
                 // '--no-zygote',
