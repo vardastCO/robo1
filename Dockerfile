@@ -26,8 +26,6 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true \
 #
 # Copy the rest of your application code.
 
-RUN chown -R node:node /usr/src/app
-
 # Switch to the 'node' user
 USER node
 
