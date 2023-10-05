@@ -7,17 +7,16 @@ WORKDIR /usr/src/app
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true \ 
    PUPPETEER_EXECUTABLE_PATH = /usr/bin/google-chrome-stable
 
-COPY package*.json ./
+
+RUN chown -R node:node /usr/src/app
 
 # Switch to the 'node' user
 USER node
 
-# Install npm dependencies
-RUN npm install
-
 # Copy the rest of your application code
 COPY . .
 
+RUN npm install
 # Expose port 3002 for your Node.js application.
 EXPOSE 3002
 
