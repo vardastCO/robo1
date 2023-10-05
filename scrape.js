@@ -47,9 +47,7 @@ async function main() {
     const unprocessedHrefs = new Set();
     if(await browser){
         async function processPage(pageUrl) {
-            console.log('Processing Page:', pageUrl);
             try {
-                console.log(browser,'broooooowser')
                 const page = await browser.newPage();
                 await page.goto(pageUrl, { timeout: 300000  });
                 await page.screenshot();
