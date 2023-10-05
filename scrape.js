@@ -10,6 +10,9 @@ const csvWriter = createCsvWriter({
     ],
 });
 
+const proxyServer =
+'ss://YWVzLTI1Ni1nY206d0DVaGt6WGpjRA==@38.54.13.15:31214#main';
+
 try {
     const browser =  puppeteer.launch({
         headless: true, // Set to true for headless mode, false for non-headless
@@ -32,8 +35,7 @@ try {
     console.error('Error first step while launching the browser:', error);
 }
 
-const proxyServer =
-'ss://YWVzLTI1Ni1nY206d0DVaGt6WGpjRA==@38.54.13.15:31214#main';
+
 
 
 const initialPage = 'https://www.hypersaz.com/';
@@ -133,8 +135,6 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
     } catch (error) {
         console.error('An error occurred:', error);
     } finally {
-        if (browser) {
-            await browser.close();
-        }
+        console.log('final')
     }
 })();
