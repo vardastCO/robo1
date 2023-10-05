@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+require("dotenv").config()
 
 const csvWriter = createCsvWriter({
     path: 'output.csv',
@@ -18,13 +19,16 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
             'ss://YWVzLTI1Ni1nY206d0DVaGt6WGpjRA==@38.54.13.15:31214#main';
         try {
             browser = await puppeteer.launch({
-                headless: "new", // Set to true for headless mode, false for non-headless
-                executablePath: '/usr/bin/google-chrome',
+                headless: true, // Set to true for headless mode, false for non-headless
+                executablePath:  process.env.NODE_ENV === "production" ?
+                  process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath(),
                 args: [
                     '--no-sandbox',
                     `--proxy-server=${proxyServer}`,
                     '--disable-setuid-sandbox',
-
+                    '--enable-logging',
+                    '--no-zygote',
+                    '--single-process'
                 ],
             });
 
