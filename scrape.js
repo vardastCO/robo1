@@ -43,9 +43,14 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
 
     async function processPage(pageUrl) {
         console.log('Processing Page:', pageUrl);
-        const page = await browser.newPage();
-        await page.goto(pageUrl, { timeout: 60000 });
-        await page.screenshot();
+        try {
+            const page = await browser.newPage();
+            await page.goto(pageUrl, { timeout: 60000 });
+            await page.screenshot();
+          } catch (error) {
+            console.error('An error occurred while navigating to the page farbooood:', error);
+            // Handle the error as needed
+          }
 
         const priceElement = await page.$x(
             '/html/body/section[2]/div/div/div[3]/div/ul/li[2]/p/span'
