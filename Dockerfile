@@ -1,5 +1,7 @@
 FROM ghcr.io/puppeteer/puppeteer:19.7.2
 
+RUN groupadd -r myuser && useradd -r -g myuser myuser
+
 WORKDIR /usr/src/app
 
 # We don't need the standalone Chromium
@@ -24,12 +26,17 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true \
 
 #
 # Copy the rest of your application code.
-COPY . .
+
+RUN chown myuser:myuser /usr/src/app
+
+# Switch to the non-root user
+USER myuser
+
 
 
 RUN npm install
 
-
+COPY . .
 # Expose port 3002 for your Node.js application.
 EXPOSE 3002
 
