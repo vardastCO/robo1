@@ -42,6 +42,7 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
     const unprocessedHrefs = new Set();
 
     async function processPage(pageUrl) {
+        let browser; 
         console.log('Processing Page:', pageUrl);
         try {
             browser = await puppeteer.launch({
@@ -57,6 +58,7 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
                             '--single-process'
                         ],
                     });
+                    console.log('broeswerrrr',browser)
             const page = await browser.newPage();
             await page.goto(pageUrl, { timeout: 120000 });
             await page.screenshot();
