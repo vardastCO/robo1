@@ -1,6 +1,5 @@
 const puppeteer = require('puppeteer');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
-const axios = require('axios');
 require("dotenv").config()
 
 const csvWriter = createCsvWriter({
@@ -15,8 +14,7 @@ const initialPage = 'https://www.hypersaz.com/';
 const startUrlPattern = 'https://www.hypersaz.com/product.php?';
 
 (async () => {
-    let browser;
-    let page ;// Declare the browser variable
+    let browser; // Declare the browser variable
         const proxyServer =
             'ss://YWVzLTI1Ni1nY206d0DVaGt6WGpjRA==@38.54.13.15:31214#main';
         try {
@@ -44,31 +42,11 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
     const unprocessedHrefs = new Set();
 
     async function processPage(pageUrl) {
-        try {
-            const response = await axios.get(pageUrl);
-            if (response.status === 200) {
-              console.log(`${pageUrl} is accessible.`);
-              // Proceed with Puppeteer code here
-            } else {
-              console.log(`${pageUrl} returned status code ${response.status}.`);
-              // Handle accordingly
-            }
-          } catch (error) {
-            console.error(`Error checking ${pageUrl}: ${error.message}`);
-            // Handle the error
-          }
+        console.log('Processing Page:', pageUrl);
+        const page = await browser.newPage();
+        await page.goto(pageUrl, { timeout: 60000 });
+        await page.screenshot();
 
-
-        try{
-            console.log('Processing Page:', pageUrl);
-            let page = await browser.newPage();
-            await page.goto(pageUrl, { timeout:  60000 });
-            await page.screenshot();
-    
-        }catch (error) {
-            console.error('farbooood:', error);
-        }
-       
         const priceElement = await page.$x(
             '/html/body/section[2]/div/div/div[3]/div/ul/li[2]/p/span'
         );
@@ -123,7 +101,7 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
                 } catch (error) {
                     if (error.name === 'TimeoutError') {
                         console.error(
-                            `Timeout occurred (Retry ${retryCount + 1}/${maxRetries}). Retrying...`,error
+                            `Timeout occurred (Retry ${retryCount + 1}/${maxRetries}). Retrying...`
                         );
                         retryCount++;
                     } else {
@@ -148,9 +126,6 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
     } finally {
         if (browser) {
             await browser.close();
-        }
-        if (page) {
-            await page.close();
         }
     }
 })();
