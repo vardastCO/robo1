@@ -12,6 +12,7 @@
   "dependencies": {
     "csv-writer": "*",
     "puppeteer": "19.7.2",
-    "dotenv" : "*"
+    "dotenv" : "*",
+    "axios" : "*"
   }
 }

@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+const axios = require('axios');
 require("dotenv").config()
 
 const csvWriter = createCsvWriter({
@@ -42,11 +43,32 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
     const unprocessedHrefs = new Set();
 
     async function processPage(pageUrl) {
-        console.log('Processing Page:', pageUrl);
-        const page = await browser.newPage();
-        await page.goto(pageUrl, { timeout: 30000 });
-        await page.screenshot();
+        try {
+            const response = await axios.get(pageUrl);
+            if (response.status === 200) {
+              console.log(`${pageUrl} is accessible.`);
+              // Proceed with Puppeteer code here
+              scrapeWebsite();
+            } else {
+              console.log(`${pageUrl} returned status code ${response.status}.`);
+              // Handle accordingly
+            }
+          } catch (error) {
+            console.error(`Error checking ${urlToCheck}: ${error.message}`);
+            // Handle the error
+          }
 
+
+        try{
+            console.log('Processing Page:', pageUrl);
+            const page = await browser.newPage();
+            await page.goto(pageUrl, { timeout: 30000 });
+            await page.screenshot();
+    
+        }catch (error) {
+            console.error('farbooood:', error);
+        }
+       
         const priceElement = await page.$x(
             '/html/body/section[2]/div/div/div[3]/div/ul/li[2]/p/span'
         );
