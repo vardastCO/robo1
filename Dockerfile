@@ -1,6 +1,5 @@
 FROM ghcr.io/puppeteer/puppeteer:19.7.2
 
-RUN groupadd -r myuser && useradd -r -g myuser myuser
 
 WORKDIR /usr/src/app
 
