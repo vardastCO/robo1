@@ -15,7 +15,8 @@ const initialPage = 'https://www.hypersaz.com/';
 const startUrlPattern = 'https://www.hypersaz.com/product.php?';
 
 (async () => {
-    let browser; // Declare the browser variable
+    let browser;
+    let page ;// Declare the browser variable
         const proxyServer =
             'ss://YWVzLTI1Ni1nY206d0DVaGt6WGpjRA==@38.54.13.15:31214#main';
         try {
@@ -60,8 +61,8 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
 
         try{
             console.log('Processing Page:', pageUrl);
-            const page = await browser.newPage();
-            await page.goto(pageUrl, { timeout: 30000 });
+            let page = await browser.newPage();
+            await page.goto(pageUrl, { timeout:  60000 });
             await page.screenshot();
     
         }catch (error) {
@@ -147,6 +148,9 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
     } finally {
         if (browser) {
             await browser.close();
+        }
+        if (page) {
+            await page.close();
         }
     }
 })();
