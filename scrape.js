@@ -11,7 +11,7 @@ const csvWriter = createCsvWriter({
 });
 
 try {
-    const browser = await puppeteer.launch({
+    const browser =  puppeteer.launch({
         headless: true, // Set to true for headless mode, false for non-headless
         executablePath:  process.env.NODE_ENV === "production" ?
           process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath(),
