@@ -29,11 +29,11 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true \
 # Switch to the 'node' user
 USER node
 
-
+COPY . .
 
 RUN npm install
 
-COPY . .
+
 # Expose port 3002 for your Node.js application.
 EXPOSE 3002
 
