@@ -10,11 +10,13 @@ const csvWriter = createCsvWriter({
     ],
 });
 
+let browser; 
+
 const proxyServer =
 'ss://YWVzLTI1Ni1nY206d0DVaGt6WGpjRA==@38.54.13.15:31214#main';
 async function createBrowser() {
     try {
-        const browser = await puppeteer.launch({
+         browser = await puppeteer.launch({
             headless: true, // Set to true for headless mode, false for non-headless
             executablePath: process.env.NODE_ENV === "production" ?
                 process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath(),
@@ -134,7 +136,7 @@ async function main() {
         } catch (error) {
             console.error('An error occurred:', error);
         } finally {
-            if (browser) {
+            if ( await browser) {
                 await browser.close(); // Close the browser when done
             }
             console.log('final')
