@@ -10,36 +10,36 @@ const csvWriter = createCsvWriter({
     ],
 });
 
+try {
+    const browser = await puppeteer.launch({
+        headless: true, // Set to true for headless mode, false for non-headless
+        executablePath:  process.env.NODE_ENV === "production" ?
+          process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath(),
+        args: [
+            '--no-sandbox',
+            `--proxy-server=${proxyServer}`,
+            '--disable-setuid-sandbox',
+            '--enable-logging',
+            '--no-zygote',
+            '--single-process'
+        ],
+    });
+
+    console.log('browserrrr',browser)
+
+
+} catch (error) {
+    console.error('Error first step while launching the browser:', error);
+}
+
+const proxyServer =
+'ss://YWVzLTI1Ni1nY206d0DVaGt6WGpjRA==@38.54.13.15:31214#main';
+
+
 const initialPage = 'https://www.hypersaz.com/';
 const startUrlPattern = 'https://www.hypersaz.com/product.php?';
 
 (async () => {
-    let browser; // Declare the browser variable
-        const proxyServer =
-            'ss://YWVzLTI1Ni1nY206d0DVaGt6WGpjRA==@38.54.13.15:31214#main';
-        try {
-             this.browser = await this.puppeteer.launch({
-                headless: true, // Set to true for headless mode, false for non-headless
-                executablePath:  process.env.NODE_ENV === "production" ?
-                  process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath(),
-                args: [
-                    '--no-sandbox',
-                    `--proxy-server=${proxyServer}`,
-                    '--disable-setuid-sandbox',
-                    '--enable-logging',
-                    '--no-zygote',
-                    '--single-process'
-                ],
-            });
-
-            console.log('browserrrr',browser)
-
-
-        } catch (error) {
-            console.error('Error while launching the browser:', error);
-        }
-
-
     const processedHrefs = new Set();
     const unprocessedHrefs = new Set();
 
