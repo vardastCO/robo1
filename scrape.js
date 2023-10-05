@@ -18,11 +18,11 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
             'ss://YWVzLTI1Ni1nY206d0DVaGt6WGpjRA==@38.54.13.15:31214#main';
         try {
             browser = await puppeteer.launch({
-                headless: true, // Set to true for headless mode, false for non-headless
+                headless: "new", // Set to true for headless mode, false for non-headless
                 executablePath: '/usr/bin/google-chrome',
                 args: [
                     '--no-sandbox',
-                    // `--proxy-server=${proxyServer}`,
+                    `--proxy-server=${proxyServer}`,
                     '--disable-setuid-sandbox',
 
                 ],
