@@ -12,36 +12,35 @@ const csvWriter = createCsvWriter({
 
 const proxyServer =
 'ss://YWVzLTI1Ni1nY206d0DVaGt6WGpjRA==@38.54.13.15:31214#main';
-
-try {
-    const browser =  puppeteer.launch({
-        headless: true, // Set to true for headless mode, false for non-headless
-        executablePath:  process.env.NODE_ENV === "production" ?
-          process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath(),
-        args: [
-            '--no-sandbox',
-            `--proxy-server=${proxyServer}`,
-            '--disable-setuid-sandbox',
-            '--enable-logging',
-            '--no-zygote',
-            '--single-process'
-        ],
-    });
-
-    console.log('browserrrr',browser)
-
-
-} catch (error) {
-    console.error('Error first step while launching the browser:', error);
+async function createBrowser() {
+    try {
+        const browser = await puppeteer.launch({
+            headless: true, // Set to true for headless mode, false for non-headless
+            executablePath: process.env.NODE_ENV === "production" ?
+                process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath(),
+            args: [
+                '--no-sandbox',
+                `--proxy-server=${proxyServer}`,
+                '--disable-setuid-sandbox',
+                '--enable-logging',
+                '--no-zygote',
+                '--single-process'
+            ],
+        });
+        return browser;
+    } catch (error) {
+        console.error('Error creating the browser:', error);
+        throw error;
+    }
 }
-
 
 
 
 const initialPage = 'https://www.hypersaz.com/';
 const startUrlPattern = 'https://www.hypersaz.com/product.php?';
 
-(async () => {
+async function main() {
+    let browser;
     const processedHrefs = new Set();
     const unprocessedHrefs = new Set();
 
@@ -135,6 +134,13 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
     } catch (error) {
         console.error('An error occurred:', error);
     } finally {
+        if (browser) {
+            await browser.close(); // Close the browser when done
+        }
         console.log('final')
     }
-})();
+    
+}
+
+main()
+
