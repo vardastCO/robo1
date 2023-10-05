@@ -48,7 +48,6 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
             if (response.status === 200) {
               console.log(`${pageUrl} is accessible.`);
               // Proceed with Puppeteer code here
-              scrapeWebsite();
             } else {
               console.log(`${pageUrl} returned status code ${response.status}.`);
               // Handle accordingly
