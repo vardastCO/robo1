@@ -27,10 +27,10 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true \
 #
 # Copy the rest of your application code.
 
-RUN chown myuser:myuser /usr/src/app
+RUN chown -R node:node /usr/src/app
 
-# Switch to the non-root user
-USER myuser
+# Switch to the 'node' user
+USER node
 
 
 
