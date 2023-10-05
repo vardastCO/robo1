@@ -17,48 +17,36 @@ const startUrlPattern = 'https://www.hypersaz.com/product.php?';
     let browser; // Declare the browser variable
         const proxyServer =
             'ss://YWVzLTI1Ni1nY206d0DVaGt6WGpjRA==@38.54.13.15:31214#main';
-        // try {
-        //     browser = await puppeteer.launch({
-        //         headless: true, // Set to true for headless mode, false for non-headless
-        //         executablePath:  process.env.NODE_ENV === "production" ?
-        //           process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath(),
-        //         args: [
-        //             '--no-sandbox',
-        //             `--proxy-server=${proxyServer}`,
-        //             '--disable-setuid-sandbox',
-        //             '--enable-logging',
-        //             '--no-zygote',
-        //             '--single-process'
-        //         ],
-        //     });
+        try {
+             this.browser = await this.puppeteer.launch({
+                headless: true, // Set to true for headless mode, false for non-headless
+                executablePath:  process.env.NODE_ENV === "production" ?
+                  process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath(),
+                args: [
+                    '--no-sandbox',
+                    `--proxy-server=${proxyServer}`,
+                    '--disable-setuid-sandbox',
+                    '--enable-logging',
+                    '--no-zygote',
+                    '--single-process'
+                ],
+            });
+
+            console.log('browserrrr',browser)
 
 
-        // } catch (error) {
-        //     console.error('Error while launching the browser:', error);
-        // }
+        } catch (error) {
+            console.error('Error while launching the browser:', error);
+        }
 
 
     const processedHrefs = new Set();
     const unprocessedHrefs = new Set();
 
     async function processPage(pageUrl) {
-        let browser; 
         console.log('Processing Page:', pageUrl);
         try {
-            browser = await puppeteer.launch({
-                        headless: true, // Set to true for headless mode, false for non-headless
-                        executablePath:  process.env.NODE_ENV === "production" ?
-                          process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath(),
-                        args: [
-                            '--no-sandbox',
-                            `--proxy-server=${proxyServer}`,
-                            '--disable-setuid-sandbox',
-                            '--enable-logging',
-                            '--no-zygote',
-                            '--single-process'
-                        ],
-                    });
-                    console.log('broeswerrrr',browser)
+            console.log(browser,'broooooowser')
             const page = await browser.newPage();
             await page.goto(pageUrl, { timeout: 120000 });
             await page.screenshot();
