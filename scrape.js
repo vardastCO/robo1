@@ -22,11 +22,11 @@ async function createBrowser() {
                 process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath(),
             args: [
                 '--no-sandbox',
-                `--proxy-server=${proxyServer}`,
+                // `--proxy-server=${proxyServer}`,
                 '--disable-setuid-sandbox',
-                '--enable-logging',
-                '--no-zygote',
-                '--single-process'
+                // '--enable-logging',
+                // '--no-zygote',
+                // '--single-process'
             ],
         });
         return browser;
@@ -51,7 +51,7 @@ async function main() {
             try {
                 console.log(browser,'broooooowser')
                 const page = await browser.newPage();
-                await page.goto(pageUrl, { timeout: 120000 });
+                await page.goto(pageUrl, { timeout: 300000  });
                 await page.screenshot();
                 const priceElement = await page.$x(
                     '/html/body/section[2]/div/div/div[3]/div/ul/li[2]/p/span'
