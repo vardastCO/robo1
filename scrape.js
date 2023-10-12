@@ -50,7 +50,7 @@ async function main() {
             console.log('Processing Page:', pageUrl);
             try {
                 const page = await browser.newPage();
-                await page.goto(pageUrl, { timeout: 300000  });
+                await page.goto(pageUrl, { timeout: 180000    });
                 await page.screenshot();
                 const priceElement = await page.$x(
                     '/html/body/section[2]/div/div/div[3]/div/ul/li[2]/p/span'
