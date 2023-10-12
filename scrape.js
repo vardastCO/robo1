@@ -7,6 +7,7 @@ const csvWriter = createCsvWriter({
     header: [
         { id: 'url', title: 'URL' },
         { id: 'price', title: 'Price' },
+        { id: 'name', title: 'Name' },
     ],
 });
 
@@ -50,7 +51,7 @@ async function main() {
             console.log('Processing Page:', pageUrl);
             try {
                 const page = await browser.newPage();
-                await page.goto(pageUrl, { timeout: 180000    });
+                await page.goto(pageUrl, { timeout: 120000    });
                 await page.screenshot();
                 const priceElement = await page.$x(
                     '/html/body/section[2]/div/div/div[3]/div/ul/li[2]/p/span'
@@ -60,10 +61,15 @@ async function main() {
                         (el) => el.textContent,
                         priceElement[0]
                     );
-                    if (priceText.trim() !== '') {
-                        const record = [{ url: pageUrl, price: priceText.trim() }];
+                    const nameText = await page.evaluate(
+                        (el) => el.textContent,
+                        nameElement[0]
+                    );
+        
+                    if (priceText.trim() !== '' && nameText.trim() !== '') {
+                        const record = [{ url: pageUrl, name: nameText.trim(), price: priceText.trim() }];
                         await csvWriter.writeRecords(record);
-                        console.log(`Saved: URL: ${pageUrl}, Price: ${priceText.trim()}`);
+                        console.log(`Saved: URL: ${pageUrl}, Name: ${nameText.trim()}, Price: ${priceText.trim()}`);
                     }
                 }
                 const hrefs = await page.evaluate(() => {
