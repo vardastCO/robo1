@@ -1,16 +1,50 @@
 version: '3'
 services:
-  node-app:
+  node-app-1:
     build:
-      context: .  # The path to the directory containing your Node.js app
+      context: .
     ports:
-      - "3002:3002"       # Map your Node.js app's port to the host
+      - "3002:3002"  # Map container port 3002 to host port 3002 for the first replica
     volumes:
       - "./data:/app/data"
     depends_on:
       - postgres
-    deploy:
-      replicas: 5 
+    networks:
+      - custom_network
+
+  node-app-2:
+    build:
+      context: .
+    ports:
+      - "3003:3002"  # Map container port 3002 to host port 3003 for the second replica
+    volumes:
+      - "./data:/app/data"
+    depends_on:
+      - postgres
+    networks:
+      - custom_network
+
+  node-app-3:
+    build:
+      context: .
+    ports:
+      - "3004:3002"  # Map container port 3002 to host port 3004 for the third replica
+    volumes:
+      - "./data:/app/data"
+    depends_on:
+      - postgres
+    networks:
+      - custom_network
+
+  node-app-4:
+    build:
+      context: .
+    ports:
+      - "3005:3002"  # Map container port 3002 to host port 3005 for the fourth replica
+    volumes:
+      - "./data:/app/data"
+    depends_on:
+      - postgres
     networks:
       - custom_network
 
