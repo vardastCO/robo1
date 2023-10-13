@@ -13,6 +13,7 @@
     "csv-writer": "*",
     "puppeteer": "19.7.2",
     "dotenv" : "*",
-    "axios" : "*"
+    "axios" : "*",
+    "pg" : "*"
   }
 }

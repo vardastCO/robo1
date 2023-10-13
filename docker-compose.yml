@@ -7,3 +7,24 @@ services:
       - "3002:3002"       # Map your Node.js app's port to the host
     volumes:
       - "./data:/app/data"
+    depends_on:
+      - postgres
+    networks:
+      - custom_network
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: db
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+    networks:
+      - custom_network
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+networks:
+  custom_network:
+    external: true
