@@ -9,6 +9,8 @@ services:
       - "./data:/app/data"
     depends_on:
       - postgres
+    deploy:
+      replicas: 5 
     networks:
       - custom_network
 
