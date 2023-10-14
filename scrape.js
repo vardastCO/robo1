@@ -81,7 +81,7 @@ async function main() {
                         const record = [{ url: pageUrl, price: priceText.trim() }];
                         await csvWriter.writeRecords(record);
                         await pool.query('INSERT INTO scraped_data(name, url, price) VALUES($1, $2, $3)', [nameValue, pageUrl, nameText.trim()]);
-                        console.log(`Saved: URL: ${pageUrl}, Price: ${priceText.trim()}`);
+                        // console.log(`Saved: URL: ${pageUrl}, Price: ${priceText.trim()}`);
                     }
                 }
                 const hrefs = await page.evaluate(() => {
@@ -109,7 +109,7 @@ async function main() {
                 }
                 await page.close();
             } catch (error) {
-                console.error('An error occurred while navigating to the page farbooood:', error);
+                // console.error('An error occurred while navigating to the page farbooood:', error);
             }      
         
         }
@@ -144,9 +144,9 @@ async function main() {
                       break; // If successful, break out of the loop
                     } catch (error) {
                       if (error.name === 'TimeoutError') {
-                        console.error(
-                          `Timeout occurred (Retry ${retryCount + 1}/${maxRetries}). Retrying...`
-                        );
+                        // console.error(
+                        //   `Timeout occurred (Retry ${retryCount + 1}/${maxRetries}). Retrying...`
+                        // );
                         retryCount++;
                       } else {
                         throw error; // Rethrow other errors
@@ -155,9 +155,9 @@ async function main() {
                   }
               
                   if (retryCount >= maxRetries) {
-                    console.error(
-                      `Max retries (${maxRetries}) reached. Unable to load the page: ${currentHref}`
-                    );
+                    // console.error(
+                    //   `Max retries (${maxRetries}) reached. Unable to load the page: ${currentHref}`
+                    // );
                     // Handle the situation when the page can't be loaded after maximum retries.
                     await pageForEvaluation.close();
                     continue; // Move on to the next URL
@@ -169,7 +169,7 @@ async function main() {
                   throw ('exist visited url farbod');
                 }
             } catch (error) {
-            console.error('An error occurred:', error);
+            // console.error('An error occurred:', error);
             }
         }
         
