@@ -42,7 +42,7 @@ async function createBrowser() {
         });
         return browser;
     } catch (error) {
-        console.error('Error creating the browser:', error);
+        // console.error('Error creating the browser:', error);
         throw error;
     }
 }
@@ -150,7 +150,7 @@ async function main() {
                         // );
                         retryCount++;
                       } else {
-                        throw error; // Rethrow other errors
+                        // throw error; // Rethrow other errors
                       }
                     }
                   }
@@ -167,7 +167,7 @@ async function main() {
                   await pageForEvaluation.close();
                 } else {
                   await pool.query('DELETE FROM unvisited WHERE url = $1', [currentHref]);
-                  throw ('exist visited url farbod');
+                  // throw ('exist visited url farbod');
                 }
             } catch (error) {
             // console.error('An error occurred:', error);
