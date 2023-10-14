@@ -77,10 +77,11 @@ async function main() {
                         (el) => el.textContent,
                         nameElement[0]
                     );
+                    console.log('NAME',nameText.trim())
+                    console.log('NAME',priceText.trim())
                     if (priceText.trim() !== '' && nameText.trim() !== '') {
-                        const record = [{ url: pageUrl, price: priceText.trim() }];
-                        await csvWriter.writeRecords(record);
-                        await pool.query('INSERT INTO scraped_data(name, url, price) VALUES($1, $2, $3)', [nameValue, pageUrl, nameText.trim()]);
+                      
+                        await pool.query('INSERT INTO scraped_data(name, url, price) VALUES($1, $2, $3)', [nameText.trim(), pageUrl, priceText.trim()]);
                         // console.log(`Saved: URL: ${pageUrl}, Price: ${priceText.trim()}`);
                     }
                 }
