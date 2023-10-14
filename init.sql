@@ -10,6 +10,7 @@ CREATE TABLE unvisited (
 
 CREATE TABLE scraped_data (
     id SERIAL PRIMARY KEY,
+    name TEXT,
     url TEXT UNIQUE,
     price TEXT
 );

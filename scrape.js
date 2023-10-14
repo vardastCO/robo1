@@ -8,7 +8,7 @@ const pool = new Client({
     host: 'postgres', // Use the service name defined in docker-compose.yml
     database: 'mydb', // This should match the POSTGRES_DB in docker-compose.yml
     password: 'root',
-    port: 5432,
+    port: 5433,
   });
   
 const csvWriter = createCsvWriter({
@@ -65,15 +65,22 @@ async function main() {
                 const priceElement = await page.$x(
                     '/html/body/section[2]/div/div/div[3]/div/ul/li[2]/p/span'
                 );
+                const nameElement = await page.$x(
+                    '/html/body/section[2]/div/div/div[2]/div/div[1]/div/div[1]/h1'
+                );
                 if (priceElement.length > 0) {
                     const priceText = await page.evaluate(
                         (el) => el.textContent,
                         priceElement[0]
                     );
-                    if (priceText.trim() !== '') {
+                    const nameText = await page.evaluate(
+                        (el) => el.textContent,
+                        nameElement[0]
+                    );
+                    if (priceText.trim() !== '' && nameText.trim() !== '') {
                         const record = [{ url: pageUrl, price: priceText.trim() }];
                         await csvWriter.writeRecords(record);
-                        await pool.query('INSERT INTO scraped_data(url, price) VALUES($1, $2)', [pageUrl, priceText.trim()]);
+                        await pool.query('INSERT INTO scraped_data(name, url, price) VALUES($1, $2, $3)', [nameValue, pageUrl, nameText.trim()]);
                         console.log(`Saved: URL: ${pageUrl}, Price: ${priceText.trim()}`);
                     }
                 }
