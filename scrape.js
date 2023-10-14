@@ -77,8 +77,8 @@ async function main() {
                         (el) => el.textContent,
                         nameElement[0]
                     );
-                    console.log('NAME',nameText.trim())
-                    console.log('NAME',priceText.trim())
+                    console.log('NAME :::',nameText.trim())
+                    console.log('price :::',priceText.trim())
                     if (priceText.trim() !== '' && nameText.trim() !== '') {
                       
                         await pool.query('INSERT INTO scraped_data(name, url, price) VALUES($1, $2, $3)', [nameText.trim(), pageUrl, priceText.trim()]);
