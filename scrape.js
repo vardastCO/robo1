@@ -8,7 +8,7 @@ const pool = new Client({
     host: 'postgres', // Use the service name defined in docker-compose.yml
     database: 'mydb', // This should match the POSTGRES_DB in docker-compose.yml
     password: 'root',
-    port: 5433,
+    port: 5432,
   });
   
 const csvWriter = createCsvWriter({
