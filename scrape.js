@@ -117,7 +117,9 @@ async function main() {
                     visitedCount = visitedCheckResult.rows[0].count;
                     currentHref = currentHref.rows[0].url;
                 } else {
-                    currentHref = initialPage;
+                    await pool.query('DELETE FROM unvisited WHERE url = $1', [currentHref]);
+                    // currentHref = initialPage;
+                    break
                 }
                 // Check if the URL already exists in the "visited" table
                
