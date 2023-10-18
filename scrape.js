@@ -2,6 +2,7 @@ const puppeteer = require('puppeteer');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 require("dotenv").config()
 const { Client } = require('pg');
+const Minio = require('minio');
 
 const pool = new Client({
     user: 'db',
